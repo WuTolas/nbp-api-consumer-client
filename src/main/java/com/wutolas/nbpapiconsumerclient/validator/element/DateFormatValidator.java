@@ -9,7 +9,7 @@ import java.time.format.DateTimeParseException;
 @Component
 public class DateFormatValidator {
 
-    private String datePattern;
+    private final String datePattern;
 
     public DateFormatValidator(@Value("${api.nbp.date.pattern}") String datePattern) {
         this.datePattern = datePattern;

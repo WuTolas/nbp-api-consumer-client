@@ -33,9 +33,9 @@ public class ExchangeRatesRequestValidator implements Validator {
         ExchangeRatesRequest exchangeRatesRequest = (ExchangeRatesRequest) o;
 
         if (!dateFormatValidator.isValid(exchangeRatesRequest.getDateFrom())) {
-            errors.rejectValue("dateFrom", "Wrong date test message");
+            errors.rejectValue("dateFrom", "Data powinna być w następującym formacie: YYYY-MM-DD");
         } else if (!dateBoundariesValidator.isValid(exchangeRatesRequest.getDateFrom())) {
-            errors.rejectValue("dateFrom", "Wrong date test message2");
+            errors.rejectValue("dateFrom", "Data wykracza dozwolony zakres");
         }
 
     }

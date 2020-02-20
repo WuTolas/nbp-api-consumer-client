@@ -1,6 +1,5 @@
 package com.wutolas.nbpapiconsumerclient.validator.element;
 
-import org.apache.tomcat.jni.Local;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -11,9 +10,9 @@ import java.time.format.DateTimeParseException;
 @Component
 public class DateBoundariesValidator {
 
-    private String datePattern;
-    private String dateMin;
-    private String dateMax;
+    private final String datePattern;
+    private final String dateMin;
+    private final String dateMax;
 
     public DateBoundariesValidator(
             @Value("${api.nbp.date.pattern}") String datePattern,
@@ -39,7 +38,7 @@ public class DateBoundariesValidator {
             if (dateMax.equals("now")) {
                 maxDate = LocalDate.now();
             } else {
-                maxDate = LocalDate.parse(dateString, formatter);
+                maxDate = LocalDate.parse(dateMax, formatter);
             }
 
             return (providedDate.isAfter(minDate) && providedDate.isBefore(maxDate))
