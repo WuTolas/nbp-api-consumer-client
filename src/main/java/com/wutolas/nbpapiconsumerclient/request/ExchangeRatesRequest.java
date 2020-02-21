@@ -1,6 +1,7 @@
 package com.wutolas.nbpapiconsumerclient.request;
 
 import com.wutolas.nbpapiconsumerclient.validator.ApiNbpDateBoundariesConstraint;
+import com.wutolas.nbpapiconsumerclient.validator.ApiNbpSingleCurrencyDaysLimitConstraint;
 import com.wutolas.nbpapiconsumerclient.validator.order.ExchangeRatesCheck;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -12,7 +13,10 @@ public class ExchangeRatesRequest {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @NotNull
     @ApiNbpDateBoundariesConstraint(
-            message = "{exchangeRatesRequest.dateFrom.dateBoundariesConstraint}",
+            message = "{exchangeRatesRequest.dateFrom.ApiNbpDateBoundariesConstraint}",
+            groups = ExchangeRatesCheck.class)
+    @ApiNbpSingleCurrencyDaysLimitConstraint(
+            message = "{exchangeRatesRequest.dateFrom.ApiNbpSingleCurrencyDaysLimitConstraint}",
             groups = ExchangeRatesCheck.class)
     private LocalDate dateFrom;
 
