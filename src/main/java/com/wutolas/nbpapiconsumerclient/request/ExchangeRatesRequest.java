@@ -11,7 +11,7 @@ import java.time.LocalDate;
 public class ExchangeRatesRequest {
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @NotNull
+    @NotNull(message = "{exchangeRatesRequest.dateFrom.NotNull}")
     @ApiNbpDateBoundariesConstraint(
             message = "{exchangeRatesRequest.dateFrom.ApiNbpDateBoundariesConstraint}",
             groups = ExchangeRatesCheck.class)
