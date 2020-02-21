@@ -1,5 +1,7 @@
 package com.wutolas.nbpapiconsumerclient.validator;
 
+import org.springframework.beans.factory.annotation.Value;
+
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 import javax.validation.constraints.NotNull;
@@ -7,11 +9,20 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
-public class DateBoundariesValidator implements ConstraintValidator<DateBoundariesConstraint, LocalDate> {
+public class ApiNbpDateBoundariesValidator implements ConstraintValidator<ApiNbpDateBoundariesConstraint, LocalDate> {
 
-    private String datePattern;
-    private String dateMin;
-    private String dateMax;
+    private final String datePattern;
+    private final String dateMin;
+    private final String dateMax;
+
+    public ApiNbpDateBoundariesValidator(
+            @Value("${api.nbp.date.pattern}") String datePattern,
+            @Value("${api.nbp.date.min}") String dateMin,
+            @Value("${api.nbp.date.max}") String dateMax) {
+        this.datePattern = datePattern;
+        this.dateMin = dateMin;
+        this.dateMax = dateMax;
+    }
 
     @Override
     public boolean isValid(@NotNull LocalDate providedDate, ConstraintValidatorContext constraintValidatorContext) {
@@ -30,7 +41,8 @@ public class DateBoundariesValidator implements ConstraintValidator<DateBoundari
             }
 
             return (providedDate.isAfter(minDate) && providedDate.isBefore(maxDate))
-                    || providedDate.isEqual(minDate) || providedDate.isEqual(maxDate);
+                    || providedDate.isEqual(minDate)
+                    || providedDate.isEqual(maxDate);
 
         } catch (DateTimeParseException ex) {
             return false;
@@ -38,10 +50,8 @@ public class DateBoundariesValidator implements ConstraintValidator<DateBoundari
     }
 
     @Override
-    public void initialize(DateBoundariesConstraint constraintAnnotation) {
-        dateMin = constraintAnnotation.dateMin();
-        dateMax = constraintAnnotation.dateMax();
-        datePattern = constraintAnnotation.pattern();
+    public void initialize(ApiNbpDateBoundariesConstraint constraintAnnotation) {
+
     }
 
 }
