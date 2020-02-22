@@ -3,6 +3,7 @@ package com.wutolas.nbpapiconsumerclient.converter;
 import com.wutolas.nbpapiconsumerclient.model.api.ExchangeRatesSeries;
 import com.wutolas.nbpapiconsumerclient.response.ExchangeRatesResponse;
 import org.springframework.core.convert.converter.Converter;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -15,7 +16,7 @@ public class ExchangeRatesSeriesToExchangeRatesResponse implements Converter<Exc
     }
 
     @Override
-    public ExchangeRatesResponse convert(ExchangeRatesSeries source) {
+    public ExchangeRatesResponse convert(@NonNull ExchangeRatesSeries source) {
 
         ExchangeRatesResponse exchangeRatesResponse = new ExchangeRatesResponse();
         exchangeRatesResponse.setCode(source.getCode());
