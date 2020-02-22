@@ -1,5 +1,7 @@
 package com.wutolas.nbpapiconsumerclient.validator;
 
+import org.springframework.beans.factory.annotation.Value;
+
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 import javax.validation.constraints.NotNull;
@@ -11,9 +13,13 @@ import java.time.temporal.ChronoUnit;
 public class DateDaysLimitValidator
         implements ConstraintValidator<DateDaysLimitConstraint, LocalDate> {
 
-    private String datePattern;
+    private final String datePattern;
     private String dateMax;
     private int daysLimit;
+
+    public DateDaysLimitValidator(@Value("${api.nbp.date.pattern}") String datePattern) {
+        this.datePattern = datePattern;
+    }
 
     @Override
     public boolean isValid(@NotNull LocalDate providedDate, ConstraintValidatorContext constraintValidatorContext) {
@@ -38,7 +44,6 @@ public class DateDaysLimitValidator
 
     @Override
     public void initialize(DateDaysLimitConstraint constraintAnnotation) {
-        datePattern = constraintAnnotation.datePattern();
         dateMax = constraintAnnotation.dateMax();
         daysLimit = constraintAnnotation.daysLimit();
     }

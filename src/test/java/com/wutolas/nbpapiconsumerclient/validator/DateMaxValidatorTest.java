@@ -14,19 +14,18 @@ class DateMaxValidatorTest {
 
     private DateMaxValidator validator;
     private String dateMax = "2012-12-12";
-    private String pattern = "yyyy-MM-dd";
+    private String datePattern = "yyyy-MM-dd";
 
     @BeforeEach
     void setUp() {
-        validator = new DateMaxValidator();
-        Whitebox.setInternalState(validator, "datePattern", pattern);
+        validator = new DateMaxValidator(datePattern);
         Whitebox.setInternalState(validator, "dateMax", dateMax);
     }
 
     @Test
     void isValidShouldReturnTrueWhenProvidedDateIsBeforeMaxDate() {
         //given
-        LocalDate testedDate = LocalDate.parse(dateMax, DateTimeFormatter.ofPattern(pattern)).minusDays(90);
+        LocalDate testedDate = LocalDate.parse(dateMax, DateTimeFormatter.ofPattern(datePattern)).minusDays(90);
 
         //when
         boolean result = validator.isValid(testedDate, null);
@@ -38,7 +37,7 @@ class DateMaxValidatorTest {
     @Test
     void isValidShouldReturnTrueWhenProvidedDateIsEqualToMaxDate() {
         //given
-        LocalDate testedDate = LocalDate.parse(dateMax, DateTimeFormatter.ofPattern(pattern));
+        LocalDate testedDate = LocalDate.parse(dateMax, DateTimeFormatter.ofPattern(datePattern));
 
         //when
         boolean result = validator.isValid(testedDate, null);
@@ -50,7 +49,7 @@ class DateMaxValidatorTest {
     @Test
     void isValidShouldReturnFalseWhenProvidedDateIsAfterMaxDate() {
         //given
-        LocalDate testedDate = LocalDate.parse(dateMax, DateTimeFormatter.ofPattern(pattern)).plusDays(1);
+        LocalDate testedDate = LocalDate.parse(dateMax, DateTimeFormatter.ofPattern(datePattern)).plusDays(1);
 
         //when
         boolean result = validator.isValid(testedDate, null);

@@ -18,7 +18,6 @@ public @interface DateDaysLimitConstraint {
     Class<? extends Payload>[] payload() default {};
 
     int daysLimit();
-    String datePattern();
     String dateMax();
 }
 
