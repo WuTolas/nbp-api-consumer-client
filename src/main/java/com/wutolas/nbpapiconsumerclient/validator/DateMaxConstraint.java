@@ -9,11 +9,15 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 @Documented
-@Constraint(validatedBy = ApiNbpDateBoundariesValidator.class)
+@Constraint(validatedBy = DateMaxValidator.class)
 @Target({ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
-public @interface ApiNbpDateBoundariesConstraint {
+public @interface DateMaxConstraint {
     String message() default "Incorrect date range";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
+
+    String datePattern();
+    String dateMax();
+
 }
