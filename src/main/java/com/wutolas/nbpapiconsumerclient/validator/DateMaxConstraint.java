@@ -17,7 +17,5 @@ public @interface DateMaxConstraint {
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
 
-    String datePattern();
     String dateMax();
-
 }

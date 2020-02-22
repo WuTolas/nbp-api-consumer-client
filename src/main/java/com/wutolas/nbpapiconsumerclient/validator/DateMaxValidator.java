@@ -1,5 +1,7 @@
 package com.wutolas.nbpapiconsumerclient.validator;
 
+import org.springframework.beans.factory.annotation.Value;
+
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 import javax.validation.constraints.NotNull;
@@ -9,8 +11,12 @@ import java.time.format.DateTimeParseException;
 
 public class DateMaxValidator implements ConstraintValidator<DateMaxConstraint, LocalDate> {
 
-    private String datePattern;
+    private final String datePattern;
     private String dateMax;
+
+    public DateMaxValidator(@Value("${api.nbp.date.pattern}") String datePattern) {
+        this.datePattern = datePattern;
+    }
 
     @Override
     public boolean isValid(@NotNull LocalDate providedDate, ConstraintValidatorContext constraintValidatorContext) {
@@ -33,7 +39,6 @@ public class DateMaxValidator implements ConstraintValidator<DateMaxConstraint, 
 
     @Override
     public void initialize(DateMaxConstraint constraintAnnotation) {
-        datePattern = constraintAnnotation.datePattern();
         dateMax = constraintAnnotation.dateMax();
     }
 

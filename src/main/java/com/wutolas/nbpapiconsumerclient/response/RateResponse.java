@@ -1,18 +1,20 @@
 package com.wutolas.nbpapiconsumerclient.response;
 
+import java.time.LocalDate;
+
 public class RateResponse {
 
-    private String effectiveDate;
+    private LocalDate effectiveDate;
     private Double bid;
     private Double ask;
     private Double bidDifference;
     private Double askDifference;
 
-    public String getEffectiveDate() {
+    public LocalDate getEffectiveDate() {
         return effectiveDate;
     }
 
-    public void setEffectiveDate(String effectiveDate) {
+    public void setEffectiveDate(LocalDate effectiveDate) {
         this.effectiveDate = effectiveDate;
     }
 

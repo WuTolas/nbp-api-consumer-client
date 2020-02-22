@@ -15,12 +15,11 @@ class DateDaysLimitValidatorTest {
     private DateDaysLimitValidator validator;
     private int daysLimit = 10;
     private String dateMax = "2020-01-15";
-    private String pattern = "yyyy-MM-dd";
+    private String datePattern = "yyyy-MM-dd";
 
     @BeforeEach
     void setUp() {
-        validator = new DateDaysLimitValidator();
-        Whitebox.setInternalState(validator, "datePattern", pattern);
+        validator = new DateDaysLimitValidator(datePattern);
         Whitebox.setInternalState(validator, "dateMax", dateMax);
         Whitebox.setInternalState(validator, "daysLimit", daysLimit);
     }
@@ -28,7 +27,7 @@ class DateDaysLimitValidatorTest {
     @Test
     void isValidShouldReturnTrueWhenDaysCountIsWithinLimit() {
         //given
-        LocalDate testedDate = LocalDate.parse(dateMax, DateTimeFormatter.ofPattern(pattern)).minusDays(daysLimit);
+        LocalDate testedDate = LocalDate.parse(dateMax, DateTimeFormatter.ofPattern(datePattern)).minusDays(daysLimit);
 
         //when
         boolean result = validator.isValid(testedDate, null);
@@ -40,7 +39,7 @@ class DateDaysLimitValidatorTest {
     @Test
     void isValidShouldReturnFalseWhenDaysCountIsNotWithinLimit() {
         //given
-        LocalDate testedDate = LocalDate.parse(dateMax, DateTimeFormatter.ofPattern(pattern)).minusDays(daysLimit+1);
+        LocalDate testedDate = LocalDate.parse(dateMax, DateTimeFormatter.ofPattern(datePattern)).minusDays(daysLimit+1);
 
         //when
         boolean result = validator.isValid(testedDate, null);
