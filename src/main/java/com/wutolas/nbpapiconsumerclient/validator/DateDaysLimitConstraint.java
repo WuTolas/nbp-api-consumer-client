@@ -9,12 +9,16 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 @Documented
-@Constraint(validatedBy = ApiNbpSingleCurrencyDaysLimitValidator.class)
+@Constraint(validatedBy = DateDaysLimitValidator.class)
 @Target({ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
-public @interface ApiNbpSingleCurrencyDaysLimitConstraint {
+public @interface DateDaysLimitConstraint {
     String message() default "Max days limit reached";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
+
+    int daysLimit();
+    String datePattern();
+    String dateMax();
 }
 
