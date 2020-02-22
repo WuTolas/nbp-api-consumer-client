@@ -8,47 +8,54 @@
 </head>
 <body>
 
-    <div class="container text-center">
+<div class="container text-center">
 
-        <h2 class="mt-4">Kurs kupna i sprzedaży dolara</h2>
+    <h2 class="mt-4">Kurs kupna i sprzedaży dolara</h2>
 
-        <form method="GET"
-              class="mt-4 mb-4"
-              th:action="@{/exchange-rates/usd}"
-              th:object="${exchangeRatesRequest}"
-              id="exchangeRatesRequestForm">
-            <label for="dateFrom">Początkowa data: </label>
-            <input type="text" id="dateFrom" th:field="*{dateFrom}"/><br/>
-            <span class="text-danger"
-                  th:if="${#fields.hasErrors('dateFrom')}"
-                  th:errors="*{dateFrom}"></span><br/>
-            <button type="submit" class="btn btn-primary mt-2">Generuj</button>
-        </form>
+    <form method="GET"
+          class="mt-4 mb-4"
+          th:action="@{/exchange-rates/usd}"
+          th:object="${exchangeRatesRequest}"
+          id="exchangeRatesRequestForm">
+        <label for="dateFrom">Początkowa data: </label>
+        <input type="text" id="dateFrom" th:field="*{dateFrom}"/><br/>
+        <span class="text-danger"
+              th:if="${#fields.hasErrors('dateFrom')}"
+              th:errors="*{dateFrom}"></span><br/>
+        <button type="submit" class="btn btn-primary mt-2">Generuj</button>
+    </form>
 
-        <div th:if="${exchangeRatesResponse != null}">
-            <table class="table">
-                <thead>
-                <tr>
-                    <th scope="col">Data publikacji</th>
-                    <th scope="col">Kurs kupna</th>
-                    <th scope="col">Różnica kursu kupna</th>
-                    <th scope="col">Kurs sprzedaży</th>
-                    <th scope="col">Różnica kursu sprzedaży</th>
-                </tr>
-                </thead>
-                <tbody th:each="exchangeRate : ${exchangeRatesResponse.getRates()}">
-                <tr>
-                    <td th:text="${exchangeRate.getEffectiveDate()}">...</td>
-                    <td th:text="${exchangeRate.getBid()}">...</td>
-                    <td th:text="${exchangeRate.getBidDifference()}">...</td>
-                    <td th:text="${exchangeRate.getAsk()}">...</td>
-                    <td th:text="${exchangeRate.getAskDifference()}">...</td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-
+    <div th:if="${exchangeRatesResponse != null}">
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">Data publikacji</th>
+                <th scope="col">Kurs kupna</th>
+                <th scope="col">Różnica kursu kupna</th>
+                <th scope="col">Kurs sprzedaży</th>
+                <th scope="col">Różnica kursu sprzedaży</th>
+            </tr>
+            </thead>
+            <tbody th:each="exchangeRate : ${exchangeRatesResponse.getRates()}">
+            <tr>
+                <td th:text="${exchangeRate.getEffectiveDate()}">...</td>
+                <td th:text="${exchangeRate.getBid()}">...</td>
+                <td th:if="${exchangeRate.getBidDifference() != null}"
+                    th:class="${(exchangeRate.getBidDifference() >= 0) ? 'text-success' : 'text-danger'}"
+                    th:text="${((exchangeRate.getBidDifference() >= 0) ? '+' : '') + #numbers.formatDecimal(exchangeRate.getBidDifference(), 1, 4, 'POINT')}">...</td>
+                <td th:unless="${exchangeRate.getBidDifference() != null}"
+                    th:text="--">...</td>
+                <td th:text="${exchangeRate.getAsk()}">...</td>
+                <td th:if="${exchangeRate.getAskDifference() != null}"
+                    th:class="${(exchangeRate.getAskDifference() >= 0) ? 'text-success' : 'text-danger'}"
+                    th:text="${((exchangeRate.getAskDifference() > 0) ? '+' : '') + #numbers.formatDecimal(exchangeRate.getAskDifference(), 1, 4, 'POINT')}">...</td>
+                <td th:unless="${exchangeRate.getAskDifference() != null}" th:text="--">...</td>
+            </tr>
+            </tbody>
+        </table>
     </div>
+
+</div>
 
 </body>
 </html>
