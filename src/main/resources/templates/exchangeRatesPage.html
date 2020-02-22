@@ -25,6 +25,10 @@
         <button type="submit" class="btn btn-primary mt-2">Generuj</button>
     </form>
 
+    <span class="font-weight-bold" th:if="${noDataAvailable != null}" th:text="${noDataAvailable}">
+        not found text
+    </span>
+
     <div th:if="${exchangeRatesResponse != null}">
         <table class="table">
             <thead>
