@@ -13,13 +13,9 @@ import java.time.temporal.ChronoUnit;
 public class DateDaysLimitValidator
         implements ConstraintValidator<DateDaysLimitConstraint, LocalDate> {
 
-    private final String datePattern;
+    private String datePattern;
     private String dateMax;
     private int daysLimit;
-
-    public DateDaysLimitValidator(@Value("${api.nbp.date.pattern}") String datePattern) {
-        this.datePattern = datePattern;
-    }
 
     @Override
     public boolean isValid(@NotNull LocalDate providedDate, ConstraintValidatorContext constraintValidatorContext) {
@@ -46,5 +42,6 @@ public class DateDaysLimitValidator
     public void initialize(DateDaysLimitConstraint constraintAnnotation) {
         dateMax = constraintAnnotation.dateMax();
         daysLimit = constraintAnnotation.daysLimit();
+        datePattern = constraintAnnotation.datePattern();
     }
 }

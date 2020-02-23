@@ -19,5 +19,6 @@ public @interface DateDaysLimitConstraint {
 
     int daysLimit();
     String dateMax();
+    String datePattern() default "yyyy-MM-dd";
 }
 

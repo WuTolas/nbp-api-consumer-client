@@ -19,9 +19,10 @@ class DateDaysLimitValidatorTest {
 
     @BeforeEach
     void setUp() {
-        validator = new DateDaysLimitValidator(datePattern);
+        validator = new DateDaysLimitValidator();
         Whitebox.setInternalState(validator, "dateMax", dateMax);
         Whitebox.setInternalState(validator, "daysLimit", daysLimit);
+        Whitebox.setInternalState(validator, "datePattern", datePattern);
     }
 
     @Test
