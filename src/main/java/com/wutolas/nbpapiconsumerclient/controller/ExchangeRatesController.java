@@ -5,6 +5,8 @@ import com.wutolas.nbpapiconsumerclient.response.ExchangeRatesResponse;
 import com.wutolas.nbpapiconsumerclient.service.ExchangeRatesService;
 import com.wutolas.nbpapiconsumerclient.validator.group.ExchangeRatesRequestOrderedChecks;
 import feign.FeignException;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -24,6 +26,7 @@ import java.util.Locale;
 @RequestMapping("/exchange-rates")
 public class ExchangeRatesController {
 
+    private static final Logger log = LogManager.getLogger(ExchangeRatesController.class);
     private final ExchangeRatesService exchangeRatesService;
     private final MessageSource messageSource;
 
@@ -42,11 +45,23 @@ public class ExchangeRatesController {
             String currency = "usd";
             String strTodayDate = LocalDate.now().toString();
 
+            log.info(
+                    "Prepared arguments to fetch {} rates from {} to {}",
+                    () -> currency,
+                    () -> exchangeRatesRequest.getDateFrom().toString(),
+                    () -> strTodayDate
+            );
+
             ExchangeRatesResponse exchangeRatesResponse = exchangeRatesService.getExchangeRatesWithDailyDifferences(
                     currency, exchangeRatesRequest.getDateFrom().toString(), strTodayDate
             );
 
             model.addAttribute("exchangeRatesResponse", exchangeRatesResponse);
+        } else {
+            log.debug(
+                    "ExchangeRatesRequest object wasn't validated successfully. Returning {}",
+                    () -> bindingResult.getFieldError("dateFrom")
+            );
         }
 
        return "exchangeRatesPage";
@@ -61,6 +76,8 @@ public class ExchangeRatesController {
     @ExceptionHandler({ FeignException.NotFound.class })
     @ResponseStatus(value = HttpStatus.NOT_FOUND)
     public String noDataAvailable(HttpServletRequest req, Model model) {
+        log.info("Resource server didn't find any data. Returning model with error.");
+
         ExchangeRatesRequest exchangeRatesRequest = new ExchangeRatesRequest();
         String date = req.getParameter("dateFrom");
         exchangeRatesRequest.setDateFrom(LocalDate.parse(date));

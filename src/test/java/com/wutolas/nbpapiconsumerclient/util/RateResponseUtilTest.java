@@ -8,6 +8,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.time.LocalDate;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -38,8 +39,10 @@ class RateResponseUtilTest {
 
         rateResponse1.setBid(5.4545);
         rateResponse1.setAsk(5.2233);
+        rateResponse1.setEffectiveDate(LocalDate.now().minusDays(1));
         rateResponse2.setBid(5.2123);
         rateResponse2.setAsk(5.2011);
+        rateResponse2.setEffectiveDate(LocalDate.now());
 
         double bidDiff = -0.2422;
         double askDiff = -0.0222;
@@ -68,8 +71,10 @@ class RateResponseUtilTest {
 
         rateResponse1.setBid(5.4545);
         rateResponse1.setAsk(5.2233);
+        rateResponse1.setEffectiveDate(LocalDate.now().minusDays(1));
         rateResponse2.setBid(5.2123);
         rateResponse2.setAsk(5.2011);
+        rateResponse2.setEffectiveDate(LocalDate.now());
 
         double bidDiff = -0.2422;
         double askDiff = -0.0222;
