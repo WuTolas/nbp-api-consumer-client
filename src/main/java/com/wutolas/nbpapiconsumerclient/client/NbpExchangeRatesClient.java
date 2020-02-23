@@ -16,6 +16,7 @@ public interface NbpExchangeRatesClient {
     ExchangeRatesSeries fetchBuyAndSellExchangeRatesByCurrencyAndDatesRange(
             @PathVariable String currency,
             @PathVariable String dateFrom,
-            @PathVariable String dateTo);
+            @PathVariable String dateTo
+    );
 
 }
