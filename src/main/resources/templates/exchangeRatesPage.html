@@ -17,7 +17,7 @@
           th:action="@{/exchange-rates/usd}"
           th:object="${exchangeRatesRequest}"
           id="exchangeRatesRequestForm">
-        <label for="dateFrom">Początkowa data: </label>
+        <label for="dateFrom">Początkowa data (YYYY-MM-DD): </label>
         <input type="text" id="dateFrom" th:field="*{dateFrom}"/><br/>
         <span class="text-danger"
               th:if="${#fields.hasErrors('dateFrom')}"
@@ -31,6 +31,9 @@
 
     <div th:if="${exchangeRatesResponse != null}">
         <table class="table">
+            <caption th:text="'Tabela kursu wymiany dla: ' + ${exchangeRatesResponse.getCurrency()} + ' (' + ${exchangeRatesResponse.getCode()} + ')'">
+                text
+            </caption>
             <thead>
             <tr>
                 <th scope="col">Data publikacji</th>

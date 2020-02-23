@@ -1,6 +1,7 @@
 package com.wutolas.nbpapiconsumerclient.validator;
 
-import org.springframework.beans.factory.annotation.Value;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
@@ -11,6 +12,7 @@ import java.time.format.DateTimeParseException;
 
 public class DateMaxValidator implements ConstraintValidator<DateMaxConstraint, LocalDate> {
 
+    private static final Logger log = LogManager.getLogger(DateDaysLimitValidator.class);
     private String datePattern;
     private String dateMax;
 
@@ -29,6 +31,7 @@ public class DateMaxValidator implements ConstraintValidator<DateMaxConstraint, 
             return providedDate.isBefore(maxDate) || providedDate.isEqual(maxDate);
 
         } catch (DateTimeParseException ex) {
+            log.error("Couldn't parse date from {}", () -> dateMax);
             return false;
         }
     }
