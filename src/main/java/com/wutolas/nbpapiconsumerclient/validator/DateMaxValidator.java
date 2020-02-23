@@ -11,12 +11,8 @@ import java.time.format.DateTimeParseException;
 
 public class DateMaxValidator implements ConstraintValidator<DateMaxConstraint, LocalDate> {
 
-    private final String datePattern;
+    private String datePattern;
     private String dateMax;
-
-    public DateMaxValidator(@Value("${api.nbp.date.pattern}") String datePattern) {
-        this.datePattern = datePattern;
-    }
 
     @Override
     public boolean isValid(@NotNull LocalDate providedDate, ConstraintValidatorContext constraintValidatorContext) {
@@ -40,6 +36,7 @@ public class DateMaxValidator implements ConstraintValidator<DateMaxConstraint, 
     @Override
     public void initialize(DateMaxConstraint constraintAnnotation) {
         dateMax = constraintAnnotation.dateMax();
+        datePattern = constraintAnnotation.datePattern();
     }
 
 }

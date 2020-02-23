@@ -18,4 +18,5 @@ public @interface DateMaxConstraint {
     Class<? extends Payload>[] payload() default {};
 
     String dateMax();
+    String datePattern() default "yyyy-MM-dd";
 }

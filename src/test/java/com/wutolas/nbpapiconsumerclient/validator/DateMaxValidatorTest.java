@@ -18,8 +18,9 @@ class DateMaxValidatorTest {
 
     @BeforeEach
     void setUp() {
-        validator = new DateMaxValidator(datePattern);
+        validator = new DateMaxValidator();
         Whitebox.setInternalState(validator, "dateMax", dateMax);
+        Whitebox.setInternalState(validator, "datePattern", datePattern);
     }
 
     @Test

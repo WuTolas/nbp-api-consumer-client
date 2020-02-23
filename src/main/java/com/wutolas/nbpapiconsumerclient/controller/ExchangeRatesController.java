@@ -6,6 +6,7 @@ import com.wutolas.nbpapiconsumerclient.service.ExchangeRatesService;
 import com.wutolas.nbpapiconsumerclient.validator.group.ExchangeRatesRequestOrderedChecks;
 import feign.FeignException;
 import org.springframework.context.MessageSource;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -13,6 +14,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDate;
@@ -57,6 +59,7 @@ public class ExchangeRatesController {
     }
 
     @ExceptionHandler({ FeignException.NotFound.class })
+    @ResponseStatus(value = HttpStatus.NOT_FOUND)
     public String noDataAvailable(HttpServletRequest req, Model model) {
         ExchangeRatesRequest exchangeRatesRequest = new ExchangeRatesRequest();
         String date = req.getParameter("dateFrom");
